@@ -4,3 +4,4 @@ djangorestframework==3.7.0
 markdown==2.6.9
 django-filter=1.0.4
 django-rest-swagger==2.1.2
+pygments==2.2.0
