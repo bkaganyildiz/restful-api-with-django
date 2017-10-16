@@ -5,5 +5,5 @@ schema_view = get_swagger_view(title='Pastebin API')
 
 urlpatterns = [
     url(r'^$', snippet_list),
-    url(r'^(?P<snippet_id>[0-9]+)/$', SnippetDetail.as_view())
+    url(r'^(?P<pk>[0-9]+)/$', SnippetDetail.as_view())
 ]

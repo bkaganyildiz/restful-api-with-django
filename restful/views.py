@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.views import APIView
 
 from .models import Snippet
@@ -47,24 +47,29 @@ def snippet_list(request):
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
 '''Using APIView'''
-class SnippetDetail(APIView):
-    def get_object(self, snippet_id):
-        try:
-            return Snippet.objects.get(id=snippet_id)
-        except Snippet.DoesNotExist:
-            raise Http404
-    def get(self, request, snippet_id, format=None):
-        snippet = self.get_object(snippet_id=snippet_id)
-        serializer = SnippetSerializer(snippet)
-        return Response(data=serializer.data)
-    def put(self, request, snippet_id, format=None):
-        snippet = self.get_object(snippet_id=snippet_id)
-        serializer = SnippetSerializer(snippet, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-    def delete(self, snippet_id, format=None):
-        snippet = self.get_object(snippet_id)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+# class SnippetDetail(APIView):
+#     def get_object(self, snippet_id):
+#         try:
+#             return Snippet.objects.get(id=snippet_id)
+#         except Snippet.DoesNotExist:
+#             raise Http404
+#     def get(self, request, snippet_id, format=None):
+#         snippet = self.get_object(snippet_id=snippet_id)
+#         serializer = SnippetSerializer(snippet)
+#         return Response(data=serializer.data)
+#     def put(self, request, snippet_id, format=None):
+#         snippet = self.get_object(snippet_id=snippet_id)
+#         serializer = SnippetSerializer(snippet, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_200_OK)
+#         return Response(status=status.HTTP_400_BAD_REQUEST)
+#     def delete(self, snippet_id, format=None):
+#         snippet = self.get_object(snippet_id)
+#         snippet.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
+
+'''Use generic class-based views'''
+class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
