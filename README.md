@@ -21,7 +21,7 @@ In order to start stream :
 
 [Django REST Swagger](https://django-rest-swagger.readthedocs.io/en/latest/)
 
-## Running the tests
+## Run
 
 In order to run : 
 ```
