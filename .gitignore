@@ -7,7 +7,6 @@
 *.py[co]
 .tox/
 *.xml
-__init__.py
 *.iml
 metadata*
 __pycache__
